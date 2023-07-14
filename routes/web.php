@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UrlShortenerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +13,29 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Auth::routes();
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('urlshortener');
 });
+
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// redirect to original url.
+Route::get('/u/{any}', [UrlShortenerController::class, 'handle']);
+
+
+// Store shorten url.
+Route::post('/url/shorten', [UrlShortenerController::class, 'store']);
+
+
+Route::get('/urls', [UrlShortenerController::class, 'getURLs']);
+Route::get('/top-urls', [UrlShortenerController::class, 'topURLs']);
+
+
+Route::get('/test', [UrlShortenerController::class, 'index'])->name('test');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
